@@ -92,7 +92,7 @@ void draw() {
     //soldier move around
     image(soldier, soldierX, soldierY);
     soldierX += soldierSpeed;
-    soldierX %= width;
+    if(soldierX>width) soldierX = -50;
 
     //cabbage
     image(cabbage, cabbageX, cabbageY);
