@@ -27,7 +27,7 @@ int
   grassHeight = 15, 
   block = 80, 
   soldierX, 
-  soldierY = groundHeight*2 + groundHeight*floor(random(3.99)), 
+  soldierY, 
   soldierSpeed = 5, 
   ghog_locX, 
   ghog_locY, 
@@ -35,8 +35,7 @@ int
   lifeNum = 2;
 
 float 
-  cabbageX = groundHeight*floor(random(3.99)), 
-  cabbageY = groundHeight*2 + groundHeight*floor(random(3.99));
+  cabbageX, cabbageY;
 
 void setup() {
   size(640, 480, P2D);
@@ -57,6 +56,12 @@ void setup() {
 
   ghog_locX = groundHeight*4;
   ghog_locY = groundHeight;
+
+  soldierX = groundHeight*floor(random(8.99));
+  soldierY = groundHeight*2 + groundHeight*floor(random(3.99));
+
+  cabbageX = groundHeight*floor(random(3.99));
+  cabbageY = groundHeight*2 + groundHeight*floor(random(3.99));
 }
 
 void draw() {
@@ -91,8 +96,9 @@ void draw() {
 
     //soldier move around
     image(soldier, soldierX, soldierY);
+
     soldierX += soldierSpeed;
-    if(soldierX>width) soldierX = -50;
+    if (soldierX>width) soldierX = -50;
 
     //cabbage
     image(cabbage, cabbageX, cabbageY);
@@ -138,6 +144,12 @@ void draw() {
       image(restartHovered, 248, 360);
       if (mousePressed) {
         gameState = game_run;
+
+        cabbageX = groundHeight*floor(random(3.99));
+        cabbageY = groundHeight*2 + groundHeight*floor(random(3.99));
+
+        soldierX = groundHeight*floor(random(8.99));
+        soldierY = groundHeight*2 + groundHeight*floor(random(3.99));
       }
     } else {
       image(restartNormal, 248, 360);
@@ -147,27 +159,44 @@ void draw() {
 }
 
 void keyPressed() {
-  if (key == CODED) {
-    switch(keyCode) {
-    case UP:
-      ghog_locY -= groundHeight;
-      if (ghog_locY < 0) ghog_locY = 0;
-      break;
-    case DOWN:
-      ghog_locY += groundHeight;
-      if (ghog_locY + block > height) ghog_locY = height - block;
-      break;
-    case RIGHT:
-      ghog_locX += groundHeight;
-      if (ghog_locX + block > width) ghog_locX = width - block;
-      break;
-    case LEFT:
-      ghog_locX -= groundHeight;
-      if (ghog_locX < 0) ghog_locX = 0;
-      break;
-    }
+  switch(keyCode) {
+  case UP:
+    upPressed = true;
+    ghog_locY -= groundHeight;
+    if (ghog_locY < 0) ghog_locY = 0;
+    break;
+  case DOWN:
+    downPressed = true;
+    ghog_locY += groundHeight;
+    if (ghog_locY + block > height) ghog_locY = height - block;
+    break;
+  case RIGHT: 
+    rightPressed = true;
+    ghog_locX += groundHeight;
+    if (ghog_locX + block > width) ghog_locX = width - block;
+    break;
+  case LEFT: 
+    leftPressed = false;
+    ghog_locX -= groundHeight;
+    if (ghog_locX < 0) ghog_locX = 0;
+    break;
   }
 }
 
+
 void keyReleased() {
+  switch(keyCode) {
+  case UP:
+    upPressed = true;
+    break;
+  case DOWN:
+    downPressed = true;
+    break;
+  case RIGHT:
+    rightPressed = true;
+    break;
+  case LEFT: 
+    leftPressed = false;
+    break;
+  }
 }
