@@ -109,7 +109,6 @@ void draw() {
     }
     //groundHog
     image(groundhogIdle, ghog_locX, ghog_locY);
-
     if (
       ghog_locX < soldierX+block && 
       ghog_locX+block > soldierX &&
@@ -163,7 +162,7 @@ void keyPressed() {
   case UP:
     upPressed = true;
     ghog_locY -= groundHeight;
-    if (ghog_locY < 0) ghog_locY = 0;
+    if (ghog_locY < groundHeight*2) ghog_locY = groundHeight*1;
     break;
   case DOWN:
     downPressed = true;
